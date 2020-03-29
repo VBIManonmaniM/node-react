@@ -14,6 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useState } from 'react';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import "../style/AccordionTable.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,11 +52,10 @@ const avaliableEntities = [{
 }]
   
 export default function AccordionTable(props) {
-	const {userExpressionText = ""} = props;
+	const {userExpressionText = "", activeAccordion, setActiveAccordion} = props;
 
 	const classes = useStyles();
 
-	const [expanded, setExpand] = useState(false);
 	const [resolvedValue, setresolvedValue] = useState("");
 	const [menuConfig, setMenuConfig] = useState({
 		coordinateX: 0,
@@ -82,18 +82,18 @@ export default function AccordionTable(props) {
 		setMenuConfig({
 			anchorEl: null
 		});
-		rows.length && setExpand(true);
+		setActiveAccordion();
 		setEntitiyList(rows);
 	}
 
 	const onTextclick = (event) => {
 		event.stopPropagation();
-		entitiyList.length && setExpand(true);
+		setActiveAccordion();
 	}
 
 	const onTextDoubleClick = (event) => {
 		event.stopPropagation();
-		entitiyList.length && setExpand(true);
+		setActiveAccordion();
 		const {value, selectionStart, selectionEnd} = event.target;
 		setresolvedValue(value.substring(selectionStart, selectionEnd));
 		setMenuConfig({
@@ -129,8 +129,7 @@ export default function AccordionTable(props) {
 					)
 				}
 	    	</Menu>
-
-			<ExpansionPanel expanded={expanded}>
+			<ExpansionPanel expanded={activeAccordion && entitiyList.length}>
 				<ExpansionPanelSummary
 					aria-controls="panel1a-content"
 					id="panel1a-header"
