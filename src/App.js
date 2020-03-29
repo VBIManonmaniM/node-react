@@ -1,11 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import AccordionTable from "./components/AccordionTable";
+import AccordionTables from "./components/AccordionTables";
 
 function App() {
   return (
-    <AccordionTable />
+    <AccordionTables />
   );
 }
 
